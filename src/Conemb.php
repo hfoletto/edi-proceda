@@ -6,15 +6,15 @@ namespace EdiProceda;
 use EdiProceda\Registros\Intercambio;
 use EdiProceda\Registros\Documento;
 use EdiProceda\Registros\Transportadora;
-use EdiProceda\Registros\Ocorrencia;
+use EdiProceda\Registros\ConhecimentoEmbarcado;
 
 /**
  * @property-read Intercambio $intercambio
  * @property-read Documento $documento
  * @property-read Transportadora $transportadora
- * @property-read Ocorrencia[] $ocorrencias
+ * @property-read ConhecimentoEmbarcado[] $conhecimentos_embarcados
  */
-class Ocoren
+class Conemb
 {
 
     public $intercambio;
@@ -23,14 +23,12 @@ class Ocoren
 
     public $transportadora;
 
-    public $ocorrencias;
-
     /**
-     * Ocoren constructor.
+     * Conemb constructor.
      * @param string $file_contents
      */
     public function __construct($file_contents) {
-        $this->ocorrencias = array();
+        $this->conhecimentos_embarcados = array();
         $lines = explode(PHP_EOL, $file_contents);
         foreach ($lines as $line) {
             $this->analyseLine($line);
@@ -47,18 +45,19 @@ class Ocoren
                 $registro = new Intercambio($line);
                 $this->intercambio = $registro;
                 break;
-            case '340':
+            case '320':
                 $registro = new Documento($line);
                 $this->documento = $registro;
                 break;
-            case '341':
+            case '321':
                 $registro = new Transportadora($line);
                 $this->transportadora = $registro;
                 break;
-            case '342':
-                $registro = new Ocorrencia($line);
-                $this->ocorrencias[] = $registro;
+            case '322':
+                $registro = new ConhecimentoEmbarcado($line);
+                $this->conhecimentos_embarcados[] = $registro;
                 break;
         }
     }
+
 }
