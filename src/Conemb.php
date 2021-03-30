@@ -3,8 +3,10 @@
 
 namespace EdiProceda;
 
+use EdiProceda\Registros\DadosComplementares;
 use EdiProceda\Registros\Intercambio;
 use EdiProceda\Registros\Documento;
+use EdiProceda\Registros\TotalConhecimentosEmbarcados;
 use EdiProceda\Registros\Transportadora;
 use EdiProceda\Registros\ConhecimentoEmbarcado;
 
@@ -13,6 +15,8 @@ use EdiProceda\Registros\ConhecimentoEmbarcado;
  * @property-read Documento $documento
  * @property-read Transportadora $transportadora
  * @property-read ConhecimentoEmbarcado[] $conhecimentos_embarcados
+ * @property-read DadosComplementares $dados_complementares
+ * @property-read TotalConhecimentosEmbarcados $total_conhecimentos_embarcados
  */
 class Conemb
 {
@@ -22,6 +26,12 @@ class Conemb
     public $documento;
 
     public $transportadora;
+
+    public $conhecimentos_embarcados;
+
+    public $dados_complementares;
+
+    public $total_conhecimentos_embarcados;
 
     /**
      * Conemb constructor.
@@ -56,6 +66,14 @@ class Conemb
             case '322':
                 $registro = new ConhecimentoEmbarcado($line);
                 $this->conhecimentos_embarcados[] = $registro;
+                break;
+            case '329':
+                $registro = new DadosComplementares($line);
+                $this->dados_complementares = $registro;
+                break;
+            case '323':
+                $registro = new TotalConhecimentosEmbarcados($line);
+                $this->total_conhecimentos_embarcados = $registro;
                 break;
         }
     }

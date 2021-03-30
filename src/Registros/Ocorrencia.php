@@ -138,20 +138,6 @@ class Ocorrencia extends Registro
         '03' => 'Aceite/entrega de acordo'
     );
 
-    public $cnpj_remetente;
-
-    public $nfe_serie;
-
-    public $nfe_numero;
-
-    public $ocorrencia_codigo;
-
-    public $data;
-
-    public $observacao_codigo;
-
-    public $texto_livre;
-
     public function __construct($line)
     {
         parent::__construct($line, self::POSICOES);

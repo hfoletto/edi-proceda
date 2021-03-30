@@ -22,7 +22,7 @@ abstract class Registro
      */
     public function __construct($line, $posicoes) {
         foreach ($posicoes as $field => $position) {
-            $value = trim(substr($line, $position[0], $position[1]));
+            $value = substr($line, $position[0], $position[1]);
             if (isset($position[2])) {
                 switch ($position[2]) {
                     case self::CAST_INT:

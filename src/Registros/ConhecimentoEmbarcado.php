@@ -3,10 +3,38 @@
 
 namespace EdiProceda\Registros;
 
+use DateTime;
 use EdiProceda\Registros\Models\NotaEmbarcada;
 
 /**
+ * @property-read string $filial_emissora_conhecimento
+ * @property-read int $serie_conhecimento
+ * @property-read int $numero_conhecimento
+ * @property-read DateTime $data
+ * @property-read string $condicao_de_frete
+ * @property-read float $peso_transportado
+ * @property-read float $valor_total_frete
+ * @property-read float $base_calculo_apuracao_icms
+ * @property-read float $taxa_icms
+ * @property-read float $valor_icms
+ * @property-read float $valor_frete_peso_volume
+ * @property-read float $frete_valor
+ * @property-read float $valor_sec_cat
+ * @property-read float $valor_itr
+ * @property-read float $valor_despacho
+ * @property-read float $valor_pedagio
+ * @property-read float $valor_ademe
+ * @property-read bool $substituicao_tributaria
+ * @property-read string $cnpj_transportadora
+ * @property-read string $cnpj_remetente
  * @property-read NotaEmbarcada[] $notas_componentes
+ * @property-read string $acao_documento
+ * @property-read string $tipo_conhecimento
+ * @property-read string $indicacao_continuidade
+ * @property-read string $codigo_fiscal_natureza_operacao
+ * @property-read string $modelo_conhecimento
+ * @property-read string $chave_acesso_cte
+ * @property-read string $protocolo_autorizacao_cte
  */
 class ConhecimentoEmbarcado extends Registro
 {
@@ -14,8 +42,8 @@ class ConhecimentoEmbarcado extends Registro
     const POSICOES = array(
 //        'identificador_de_registro' => [0 , 3], // Identificador de registro
         'filial_emissora_conhecimento' => [3, 10], // Filial emissora do conhecimento
-        'serie_conhecimento' => [13, 5], // Série do conhecimento
-        'numero_conhecimento' => [18, 12], // Número do conhecimento
+        'serie_conhecimento' => [13, 5, Registro::CAST_INT], // Série do conhecimento
+        'numero_conhecimento' => [18, 12, Registro::CAST_INT], // Número do conhecimento
         'data' => [30, 8, Registro::CAST_DATE], // Data de emissão
         'condicao_de_frete' => [38, 1, self::CONDICOES_DE_FRETE], // Condição de frete
         'peso_transportado' => [39, 7, Registro::CAST_FLOAT_2_DECIMALS], // Peso transportado
@@ -37,7 +65,8 @@ class ConhecimentoEmbarcado extends Registro
         // serie e número da nota (x40)
         'acao_documento' => [672, 1, self::ACOES_DO_DOCUMENTO], // Ação do documento
         'tipo_conhecimento' => [673, 1, self::TIPOS_DO_DOCUMENTO], // Tipo do conhecimento
-        'codigo_fiscal_natureza_operacao' => [674, 4], // Código fiscal da natureza de operação
+        'indicacao_continuidade' => [674, 1, self::INDICACOES_DE_CONTINUIDADE], // Tipo do conhecimento
+        'codigo_fiscal_natureza_operacao' => [675, 4], // Código fiscal da natureza de operação
         'modelo_conhecimento' => [678, 2, self::MODELOS_DE_CONHECIMENTO], // Modelo de conhecimento
         'chave_acesso_cte' => [680, 44], // Chave de acesso do CT-e
         'protocolo_autorizacao_cte' => [724, 15], // Protocolo de autorização CT-e
@@ -74,38 +103,16 @@ class ConhecimentoEmbarcado extends Registro
         'Z' => 'Complementar de transferência interna',
     );
 
+    const INDICACOES_DE_CONTINUIDADE = array(
+        ' ' => 'Conhecimento único com 40 ou menos NFs',
+        'U' => 'Conhecimento único com 40 ou menos NFs',
+        'C' => 'Continuidade/repetição dos dados do conhecimento pelo fato deste conter mais de 40 NFs'
+    );
+
     const MODELOS_DE_CONHECIMENTO = array(
         '08' => 'Modelo para conhecimento normal',
         '57' => 'Modelo para CT-e'
     );
-
-    public $filial_emissora_conhecimento;
-    public $serie_conhecimento;
-    public $numero_conhecimento;
-    public $data;
-    public $condicao_de_frete;
-    public $peso_transportado;
-    public $valor_total_frete;
-    public $base_calculo_apuracao_icms;
-    public $taxa_icms;
-    public $valor_icms;
-    public $valor_frete_peso_volume;
-    public $frete_valor;
-    public $valor_sec_cat;
-    public $valor_itr;
-    public $valor_despacho;
-    public $valor_pedagio;
-    public $valor_ademe;
-    public $substituicao_tributaria;
-    public $cnpj_transportadora;
-    public $cnpj_remetente;
-    public $notas_componentes;
-    public $acao_documento;
-    public $tipo_conhecimento;
-    public $codigo_fiscal_natureza_operacao;
-    public $modelo_conhecimento;
-    public $chave_acesso_cte;
-    public $protocolo_autorizacao_cte;
 
     public function __construct($line)
     {
