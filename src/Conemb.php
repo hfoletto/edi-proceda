@@ -15,7 +15,6 @@ use EdiProceda\Registros\ConhecimentoEmbarcado;
  * @property-read Documento $documento
  * @property-read Transportadora $transportadora
  * @property-read ConhecimentoEmbarcado[] $conhecimentos_embarcados
- * @property-read DadosComplementares $dados_complementares
  * @property-read TotalConhecimentosEmbarcados $total_conhecimentos_embarcados
  */
 class Conemb
@@ -28,8 +27,6 @@ class Conemb
     public $transportadora;
 
     public $conhecimentos_embarcados;
-
-    public $dados_complementares;
 
     public $total_conhecimentos_embarcados;
 
@@ -69,7 +66,8 @@ class Conemb
                 break;
             case '329':
                 $registro = new DadosComplementares($line);
-                $this->dados_complementares = $registro;
+                $last_key = count($this->conhecimentos_embarcados) - 1;
+                $this->conhecimentos_embarcados[$last_key]->dados_complementares = $registro;
                 break;
             case '323':
                 $registro = new TotalConhecimentosEmbarcados($line);

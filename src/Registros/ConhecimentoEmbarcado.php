@@ -35,6 +35,7 @@ use EdiProceda\Registros\Models\NotaEmbarcada;
  * @property-read string $modelo_conhecimento
  * @property-read string $chave_acesso_cte
  * @property-read string $protocolo_autorizacao_cte
+ * @property DadosComplementares|null $dados_complementares
  */
 class ConhecimentoEmbarcado extends Registro
 {
@@ -47,7 +48,7 @@ class ConhecimentoEmbarcado extends Registro
         'data' => [30, 8, Registro::CAST_DATE], // Data de emissão
         'condicao_de_frete' => [38, 1, self::CONDICOES_DE_FRETE], // Condição de frete
         'peso_transportado' => [39, 7, Registro::CAST_FLOAT_2_DECIMALS], // Peso transportado
-        'valor_total_frete' => [36, 15, Registro::CAST_FLOAT_2_DECIMALS], // Valor total do frete
+        'valor_total_frete' => [46, 15, Registro::CAST_FLOAT_2_DECIMALS], // Valor total do frete
         'base_calculo_apuracao_icms' => [61, 15, Registro::CAST_FLOAT_2_DECIMALS], // Base de cálculo para apuração ICMS
         'taxa_icms' => [76, 4, Registro::CAST_PERCENTAGE], // % de taxa do ICMS
         'valor_icms' => [80, 15, Registro::CAST_FLOAT_2_DECIMALS], // Valor do ICMS
@@ -67,9 +68,6 @@ class ConhecimentoEmbarcado extends Registro
         'tipo_conhecimento' => [673, 1, self::TIPOS_DO_DOCUMENTO], // Tipo do conhecimento
         'indicacao_continuidade' => [674, 1, self::INDICACOES_DE_CONTINUIDADE], // Tipo do conhecimento
         'codigo_fiscal_natureza_operacao' => [675, 4], // Código fiscal da natureza de operação
-        'modelo_conhecimento' => [678, 2, self::MODELOS_DE_CONHECIMENTO], // Modelo de conhecimento
-        'chave_acesso_cte' => [680, 44], // Chave de acesso do CT-e
-        'protocolo_autorizacao_cte' => [724, 15], // Protocolo de autorização CT-e
     );
 
     const CONDICOES_DE_FRETE = array(
@@ -107,11 +105,6 @@ class ConhecimentoEmbarcado extends Registro
         ' ' => 'Conhecimento único com 40 ou menos NFs',
         'U' => 'Conhecimento único com 40 ou menos NFs',
         'C' => 'Continuidade/repetição dos dados do conhecimento pelo fato deste conter mais de 40 NFs'
-    );
-
-    const MODELOS_DE_CONHECIMENTO = array(
-        '08' => 'Modelo para conhecimento normal',
-        '57' => 'Modelo para CT-e'
     );
 
     public function __construct($line)
