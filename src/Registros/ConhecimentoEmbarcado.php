@@ -68,6 +68,9 @@ class ConhecimentoEmbarcado extends Registro
         'tipo_conhecimento' => [673, 1, self::TIPOS_DO_DOCUMENTO], // Tipo do conhecimento
         'indicacao_continuidade' => [674, 1, self::INDICACOES_DE_CONTINUIDADE], // Tipo do conhecimento
         'codigo_fiscal_natureza_operacao' => [675, 4], // Código fiscal da natureza de operação
+        'modelo_conhecimento' => [679, 2, self::MODELOS_DE_CONHECIMENTO], // Modelo de conhecimento
+        'chave_acesso_cte' => [681, 44], // Chave de acesso do CT-e
+        'protocolo_autorizacao_cte' => [725, 15], // Protocolo de autorização CT-e
     );
 
     const CONDICOES_DE_FRETE = array(
@@ -105,6 +108,11 @@ class ConhecimentoEmbarcado extends Registro
         ' ' => 'Conhecimento único com 40 ou menos NFs',
         'U' => 'Conhecimento único com 40 ou menos NFs',
         'C' => 'Continuidade/repetição dos dados do conhecimento pelo fato deste conter mais de 40 NFs'
+    );
+
+    const MODELOS_DE_CONHECIMENTO = array(
+        '08' => 'Modelo para conhecimento normal',
+        '57' => 'Modelo para CT-e'
     );
 
     public function __construct($line)
